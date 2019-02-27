@@ -1,0 +1,24 @@
+version: '3'
+#This is a test compose file wrriten by salman bawazeer on behaf of docker compose practice on v3
+services :
+  drupal-app: #This is a Drupal web App with a postgres Database
+    image : drupal:latest # This is the image which docker going to full from "hub.docker.com"
+    ports : # You can specify the ports in which you like to run
+      - 80:80
+    volumes : # This was the requirment of my App to have named mounts
+      - drupal-modules:/var/www/html/modules
+      - drupal-profiles:/var/www/html/profiles
+      - drupal-sites:/var/www/html/sites
+      - drupal-themes:/var/www/html/themes
+  PostgresDb:
+    image : postgres:11
+    environment :
+     -  POSTGRES_PASSWORD=mysecretpassword
+    
+    depends_on:
+    -  drupal-app
+volumes: 
+  drupal-modules:
+  drupal-profiles:
+  drupal-sites:
+  drupal-themes:
